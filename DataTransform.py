@@ -1,5 +1,5 @@
 import pandas as pd
-
+import re
 
 file_name = "clean_quercus.csv"
 random_state = 42
