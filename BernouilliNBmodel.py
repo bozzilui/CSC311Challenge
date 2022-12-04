@@ -1,3 +1,4 @@
+import numpy as np
 class BernoulliNB:
     def __init__(self):
         self.priors = None
