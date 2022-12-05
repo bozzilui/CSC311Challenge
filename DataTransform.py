@@ -68,7 +68,7 @@ def create_x_y(df):
     return x, y
 
 
-def transform_data(file_name):
+def transform_data(file_, data_set):
     """
     takes a csv file and transforms data to form x and y variables for
     prediction
@@ -116,9 +116,20 @@ def transform_data(file_name):
     del df["q_remind"]
 
     # Prepare data for training - use a simple train/test split for now
+    if data_set == 'test':
+        df = df[new_names + ["q_temperature", "q_remind_Parents", "q_remind_Siblings", "label"]]
 
-    df = df[new_names + ["q_temperature", "q_remind_Parents", "q_remind_Siblings", "label"]]
+        df = df.sample(frac=1, random_state=random_state)
 
-    df = df.sample(frac=1, random_state=random_state)
+        return create_x_y(df)
+    else:
+        df = df[new_names + ["q_temperature", "q_remind_Parents",
+                             "q_remind_Siblings"]]
 
-    return create_x_y(df)
+        df = df.sample(frac=1, random_state=random_state)
+
+        return df.values
+
+
+
+
