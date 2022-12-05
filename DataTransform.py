@@ -1,5 +1,7 @@
 import pandas as pd
 import re
+global x
+global y
 
 file_name = "clean_quercus.csv"
 random_state = 42
@@ -23,7 +25,7 @@ def get_number_list(s):
 def get_number_list_clean(s):
     """Return a clean list of numbers contained in `s`.
 
-    Additional cleaning includes removing numbers that are not of interest 
+    Additional cleaning includes removing numbers that are not of interest
     and standardizing return list size.
     """
     s = s.replace("3-D", '')
@@ -54,6 +56,7 @@ def cat_in_s(s, cat):
     """
     return int(cat in s) if not pd.isna(s) else 0
 
+
 def create_x_y(df):
     """
     Creates x and y variables from given dataframe, and returns them
@@ -64,8 +67,14 @@ def create_x_y(df):
 
     return x, y
 
-if __name__ == "__main__":
- 
+
+def transform_data(file_name):
+    """
+    takes a csv file and transforms data to form x and y variables for
+    prediction
+    :return: DataFrame, DataFrame
+    """
+
     df = pd.read_csv(file_name)
 
 
@@ -82,8 +91,8 @@ if __name__ == "__main__":
     df["q_quote"] = df["q_quote"].apply(get_number_list_clean)
 
     temp_names = []
-    
-    for i in range(1,6):
+
+    for i in range(1, 6):
         col_name = f"rank_{i}"
         temp_names.append(col_name)
         df[col_name] = df["q_quote"].apply(lambda l: find_quote_at_rank(l, i))
@@ -108,8 +117,8 @@ if __name__ == "__main__":
 
     # Prepare data for training - use a simple train/test split for now
 
-    df = df[new_names + ["q_temperature","q_remind_Parents","q_remind_Siblings", "label"]]
+    df = df[new_names + ["q_temperature", "q_remind_Parents", "q_remind_Siblings", "label"]]
 
     df = df.sample(frac=1, random_state=random_state)
 
-    x, y = create_x_y(df)
+    return create_x_y(df)

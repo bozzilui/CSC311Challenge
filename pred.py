@@ -6,9 +6,11 @@ import numpy as np
 from BernouilliNBmodel import BernoulliNB
 import DataTransform
 
+file_name = "clean_quercus.csv"
 
 if __name__ == "__main__":
-    x, y = DataTransform.x, DataTransform.y
+
+    x, y = DataTransform.transform_data(file_name)
 
     n_train = 500
 
@@ -48,9 +50,5 @@ if __name__ == "__main__":
         # print the prediction to stdout
         print(pred)
 
-    pred = model.predict(x_test)
-
-    # Print the predicted class labels
-    print(np.mean((y_test-pred)^2))
 
 
