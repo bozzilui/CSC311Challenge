@@ -54,6 +54,16 @@ def cat_in_s(s, cat):
     """
     return int(cat in s) if not pd.isna(s) else 0
 
+def create_x_y(df):
+    """
+    Creates x and y variables from given dataframe, and returns them
+    """
+    x = df.drop("label", axis=1).values
+
+    y = df["label"].values
+
+    return x, y
+
 if __name__ == "__main__":
  
     df = pd.read_csv(file_name)
@@ -102,6 +112,4 @@ if __name__ == "__main__":
 
     df = df.sample(frac=1, random_state=random_state)
 
-    x = df.drop("label", axis=1).values
-    
-    y = df["label"].values
+    x, y = create_x_y(df)
