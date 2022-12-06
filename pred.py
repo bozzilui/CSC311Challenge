@@ -10,37 +10,32 @@ file_name = "clean_quercus.csv"
 
 if __name__ == "__main__":
 
+    # split our training data into x and y
     x, y = DataTransform.transform_data(file_name, "train")
 
-    n_train = 500
+    x_train = x
+    y_train = y
 
-    x_train = x[:n_train]
-    y_train = y[:n_train]
-
-    #x_test = x[n_train:]
-    #y_test = y[n_train:]
-
+    # Create the model
     model = BernoulliNB()
 
     # Fit the model to the training data
     model.fit(x_train, y_train)
-    """
-    # check if the argument <test_data.csv> is provided
+
     if len(sys.argv) < 2:
-        print(
+        print("""
     Usage:
         python example_pred.py <test_data.csv>
-
+    
     As a first example, try running `python example_pred.py example_test_set.csv`
-    )
+    """)
         exit()
 
     # store the name of the file containing the test data
-    filename = sys.argv[-1]
-    """
+    file_name = sys.argv[-1]
+
     # read the file containing the test data
-    # you do not need to use the "csv" package like we are using
-    # (e.g. you may use numpy, pandas, etc)
+    # create x using test data
     x_test = DataTransform.transform_data(file_name, "test")
 
     pred = model.predict(x_test)
